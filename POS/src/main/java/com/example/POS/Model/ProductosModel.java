@@ -1,10 +1,6 @@
 package com.example.POS.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "productos")
@@ -14,7 +10,9 @@ public class ProductosModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_producto;  // Campo clave primaria
 
+    @Column (unique = true)
     private String codigo_producto;  // Código único del producto
+
     private String nombre;  // Nombre del producto
     private String descripcion;  // Descripción del producto
     private double precio_unitario;  // Precio por unidad del producto
