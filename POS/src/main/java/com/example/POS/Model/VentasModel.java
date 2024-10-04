@@ -1,12 +1,7 @@
 package com.example.POS.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ventas")
@@ -14,25 +9,33 @@ public class VentasModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_venta;  // Campo clave primaria
+    private Long id_venta;
 
-    private String numero_venta;  // Número de la venta
+    @Column(name = "numero_venta", unique = true, nullable = false)
+    private String numero_venta;
     @ManyToOne
     @JoinColumn(name = "id_empleado", nullable = false)
     private EmpleadoModel empleado;  // Relación con EmpleadoModel
 
-    private java.util.Date fecha;  // Fecha de la venta
-    private double total_venta;  // Total de la venta
+    @Column(name = "fecha", nullable = false)
+    private LocalDateTime fecha;
 
-    // Estado de la venta: completada o cancelada
-    private String estado;  // 'completada' o 'cancelada'
+    @Column(name = "total_venta", nullable = false)
+    private double total_venta;
 
-    // Constructor vacío requerido por JPA
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", nullable = false)
+    private EstadoVenta estado;
+
+    public enum EstadoVenta {
+        completada, cancelada
+    }
+
     public VentasModel() {
     }
 
-    // Constructor con parámetros
-    public VentasModel(String numero_venta, EmpleadoModel empleado, java.util.Date fecha, double total_venta, String estado) {
+    public VentasModel(Long id_venta, String numero_venta, EmpleadoModel empleado, LocalDateTime fecha, double total_venta, EstadoVenta estado) {
+        this.id_venta = id_venta;
         this.numero_venta = numero_venta;
         this.empleado = empleado;
         this.fecha = fecha;
@@ -40,7 +43,6 @@ public class VentasModel {
         this.estado = estado;
     }
 
-    // Getters y Setters
     public Long getId_venta() {
         return id_venta;
     }
@@ -65,11 +67,11 @@ public class VentasModel {
         this.empleado = empleado;
     }
 
-    public java.util.Date getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(java.util.Date fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 
@@ -81,24 +83,11 @@ public class VentasModel {
         this.total_venta = total_venta;
     }
 
-    public String getEstado() {
+    public EstadoVenta getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoVenta estado) {
         this.estado = estado;
     }
-
-    // Sobrescribimos el método toString
-    @Override
-    public String toString() {
-        return "Ventas [id_venta=" + id_venta +
-                ", numero_venta='" + numero_venta + '\'' +
-                ", empleado=" + empleado +
-                ", fecha=" + fecha +
-                ", total_venta=" + total_venta +
-                ", estado='" + estado + '\'' +
-                ']';
-    }
 }
-

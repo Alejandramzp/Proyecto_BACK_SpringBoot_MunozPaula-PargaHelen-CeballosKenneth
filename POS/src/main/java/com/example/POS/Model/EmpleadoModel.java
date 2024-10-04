@@ -1,15 +1,6 @@
 package com.example.POS.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-
+import jakarta.persistence.*;
 @Entity
 @Table(name = "Empleado")
 public class EmpleadoModel {
@@ -18,10 +9,16 @@ public class EmpleadoModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_empleado;
 
+    @Column(name = "numero_identificacion", unique = true, nullable = false)
     private String numero_identificacion;
+
+    @Column(name = "nombres", nullable = false)
     private String nombres;
+    @Column(name = "apellidos", nullable = false)
     private String apellidos;
+    @Column(name = "direccion")
     private String direccion;
+    @Column(name = "telefono")
     private String telefono;
 
     @ManyToOne
@@ -29,14 +26,14 @@ public class EmpleadoModel {
     private RolModel rol;  // Relación con RolModel
 
     @Enumerated(EnumType.STRING)
-    private EstadoEmpleado estado;  // Enum para el estado del empleado
+    @Column(name = "estado", nullable = false)
+    private EstadoEmpleado estado;
 
-    // Constructor vacío requerido por JPA
     public EmpleadoModel() {
     }
 
-    // Constructor con parámetros
-    public EmpleadoModel(String numero_identificacion, String nombres, String apellidos, String direccion, String telefono, RolModel rol, EstadoEmpleado estado) {
+    public EmpleadoModel(Long id_empleado, String numero_identificacion, String nombres, String apellidos, String direccion, String telefono, RolModel rol, EstadoEmpleado estado) {
+        this.id_empleado = id_empleado;
         this.numero_identificacion = numero_identificacion;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -46,7 +43,6 @@ public class EmpleadoModel {
         this.estado = estado;
     }
 
-    // Getters y Setters
     public Long getId_empleado() {
         return id_empleado;
     }
@@ -111,18 +107,14 @@ public class EmpleadoModel {
         this.estado = estado;
     }
 
-    // Sobrescribimos el método toString
-    @Override
-    public String toString() {
-        return "Empleado [id_empleado=" + id_empleado + ", numero_identificacion=" + numero_identificacion +
-                ", nombres=" + nombres + ", apellidos=" + apellidos + ", direccion=" + direccion +
-                ", telefono=" + telefono + ", rol=" + rol + ", estado=" + estado + "]";
-    }
-
-    // Enum para el estado del empleado
     public enum EstadoEmpleado {
         activo,
         inactivo
     }
 }
+
+
+
+
+
 

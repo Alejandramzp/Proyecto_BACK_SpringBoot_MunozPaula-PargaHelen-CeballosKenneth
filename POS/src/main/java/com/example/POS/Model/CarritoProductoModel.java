@@ -1,12 +1,6 @@
 package com.example.POS.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Carrito_Producto")
@@ -24,22 +18,23 @@ public class CarritoProductoModel {
     @JoinColumn(name = "id_producto", nullable = false)
     private ProductosModel producto;  // Relación con ProductosModel
 
-    private int cantidad;  // Cantidad del producto en el carrito
-    private double precio;  // Precio del producto en el carrito
+    @Column(name = "cantidad", nullable = false)
+    private int cantidad;
 
-    // Constructor vacío requerido por JPA
+    @Column(name = "precio", nullable = false)
+    private double precio;
+
     public CarritoProductoModel() {
     }
 
-    // Constructor con parámetros
-    public CarritoProductoModel(CarritoModel carrito, ProductosModel producto, int cantidad, double precio) {
+    public CarritoProductoModel(Long id_carrito_producto, CarritoModel carrito, ProductosModel producto, int cantidad, double precio) {
+        this.id_carrito_producto = id_carrito_producto;
         this.carrito = carrito;
         this.producto = producto;
         this.cantidad = cantidad;
         this.precio = precio;
     }
 
-    // Getters y Setters
     public Long getId_carrito_producto() {
         return id_carrito_producto;
     }
@@ -80,11 +75,4 @@ public class CarritoProductoModel {
         this.precio = precio;
     }
 
-    // Sobrescribimos el método toString
-    @Override
-    public String toString() {
-        return "CarritoProducto [id_carrito_producto=" + id_carrito_producto +
-                ", carrito=" + carrito + ", producto=" + producto +
-                ", cantidad=" + cantidad + ", precio=" + precio + "]";
-    }
 }

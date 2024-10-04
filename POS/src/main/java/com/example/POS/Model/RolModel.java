@@ -1,12 +1,6 @@
 package com.example.POS.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Rol")
@@ -17,12 +11,14 @@ public class RolModel {
     private Long id_rol;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "nombre_rol", unique = true, nullable = false)
     private RolNombre nombre_rol;
 
     public RolModel() {
     }
 
-    public RolModel(RolNombre nombre_rol) {
+    public RolModel(Long id_rol, RolNombre nombre_rol) {
+        this.id_rol = id_rol;
         this.nombre_rol = nombre_rol;
     }
 
@@ -42,14 +38,12 @@ public class RolModel {
         this.nombre_rol = nombre_rol;
     }
 
-    @Override
-    public String toString() {
-        return "RolModel [id_rol=" + id_rol + ", nombre_rol=" + nombre_rol + "]";
-    }
-
     public enum RolNombre {
         Cajero,
         Gerente,
         Administrador
     }
+
 }
+
+

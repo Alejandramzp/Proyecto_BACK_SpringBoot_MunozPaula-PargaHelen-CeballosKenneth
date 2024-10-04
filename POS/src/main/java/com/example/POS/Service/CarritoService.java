@@ -1,4 +1,3 @@
-
 package com.example.POS.Service;
 
 import com.example.POS.Model.CarritoModel;
@@ -15,33 +14,31 @@ public class CarritoService {
     @Autowired
     private CarritoRepository carritoRepository;
 
-    // Obtener todos los carritos
+    // Obtener todos
     public List<CarritoModel> getAllCarritos() {
         return carritoRepository.findAll();
     }
 
-    // Obtener un carrito por ID
+    // Obtener
     public Optional<CarritoModel> getCarritoById(Long id) {
         return carritoRepository.findById(id);
     }
 
-    // Guardar un nuevo carrito
+    // Guardar
     public CarritoModel saveCarrito(CarritoModel carrito) {
         return carritoRepository.save(carrito);
     }
 
-    // Actualizar un carrito existente
+    // Actualizar
     public CarritoModel actualizarCarrito(Long id, CarritoModel detallesCarrito) {
-        CarritoModel carrito = carritoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Carrito no encontrado"));
+        CarritoModel carrito = carritoRepository.findById(id).orElseThrow(() -> new RuntimeException("Carrito no encontrado"));
+        carrito.setEstado(detallesCarrito.getEstado());
+        carrito.setFecha_creacion(detallesCarrito.getFecha_creacion());
 
-        carrito.setEstado(detallesCarrito.getEstado()); // Actualizar el estado del carrito
-        carrito.setFecha_creacion(detallesCarrito.getFecha_creacion()); // Actualizar la fecha de creación
-
-        return carritoRepository.save(carrito); // Guardar los cambios
+        return carritoRepository.save(carrito);
     }
 
-    // Eliminar un carrito
+    // Eliminar
     public void eliminarCarrito(Long id) {
         carritoRepository.deleteById(id);
     }

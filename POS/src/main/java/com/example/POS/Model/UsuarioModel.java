@@ -1,42 +1,40 @@
 package com.example.POS.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
+import jakarta.persistence.*;
 @Entity
 @Table(name = "usuario")
 public class UsuarioModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_usuario;  // Campo clave primaria
+    private Long id_usuario;
 
-    @Column(unique = true, nullable = false)
-    private String nombre_usuario;  // Nombre de usuario único
+    @Column(name = "nombre_usuario", unique = true, nullable = false)
+    private String nombre_usuario;
 
-    @Column(nullable = false)
-    private String password;  // Contraseña del usuario
+    @Column(name = "password", nullable = false)
+    private String password;
 
-    private String token_jwt;  // Token JWT para autenticación
+    @Column(name = "token_jwt")
+    private String token_jwt;
 
     @ManyToOne
     @JoinColumn(name = "id_empleado", nullable = false)
     private EmpleadoModel empleado;  // Relación con EmpleadoModel
 
-    private String estado;  // Estado del usuario (activo o inactivo)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", nullable = false)
+    private EstadoUsuario estado;
 
-    // Constructor vacío requerido por JPA
+    public enum EstadoUsuario {
+        activo, inactivo
+    }
+
     public UsuarioModel() {
     }
 
-    // Constructor con parámetros
-    public UsuarioModel(String nombre_usuario, String password, String token_jwt, EmpleadoModel empleado, String estado) {
+    public UsuarioModel(Long id_usuario, String nombre_usuario, String password, String token_jwt, EmpleadoModel empleado, EstadoUsuario estado) {
+        this.id_usuario = id_usuario;
         this.nombre_usuario = nombre_usuario;
         this.password = password;
         this.token_jwt = token_jwt;
@@ -44,7 +42,6 @@ public class UsuarioModel {
         this.estado = estado;
     }
 
-    // Getters y Setters
     public Long getId_usuario() {
         return id_usuario;
     }
@@ -85,23 +82,12 @@ public class UsuarioModel {
         this.empleado = empleado;
     }
 
-    public String getEstado() {
+    public EstadoUsuario getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoUsuario estado) {
         this.estado = estado;
-    }
-
-    // Sobrescribimos el método toString
-    @Override
-    public String toString() {
-        return "Usuario [id_usuario=" + id_usuario +
-                ", nombre_usuario=" + nombre_usuario +
-                ", password=" + password +
-                ", token_jwt=" + token_jwt +
-                ", empleado=" + empleado +
-                ", estado=" + estado + "]";
     }
 }
 

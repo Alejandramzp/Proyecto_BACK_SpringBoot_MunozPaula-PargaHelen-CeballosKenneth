@@ -1,14 +1,6 @@
 package com.example.POS.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,23 +15,23 @@ public class CarritoModel {
     @JoinColumn(name = "id_empleado")
     private EmpleadoModel empleado;  // Relación con EmpleadoModel
 
+    @Column(name = "fecha_creacion", nullable = false)
     private LocalDateTime fecha_creacion;
 
     @Enumerated(EnumType.STRING)
-    private EstadoCarrito estado;  // Enum para el estado del carrito
+    @Column(name = "estado", nullable = false)
+    private EstadoCarrito estado;
 
-    // Constructor vacío requerido por JPA
     public CarritoModel() {
     }
 
-    // Constructor con parámetros
-    public CarritoModel(EmpleadoModel empleado, LocalDateTime fecha_creacion, EstadoCarrito estado) {
+    public CarritoModel(Long id_carrito, EmpleadoModel empleado, LocalDateTime fecha_creacion, EstadoCarrito estado) {
+        this.id_carrito = id_carrito;
         this.empleado = empleado;
         this.fecha_creacion = fecha_creacion;
         this.estado = estado;
     }
 
-    // Getters y Setters
     public Long getId_carrito() {
         return id_carrito;
     }
@@ -72,14 +64,6 @@ public class CarritoModel {
         this.estado = estado;
     }
 
-    // Sobrescribimos el método toString
-    @Override
-    public String toString() {
-        return "Carrito [id_carrito=" + id_carrito + ", empleado=" + empleado +
-                ", fecha_creacion=" + fecha_creacion + ", estado=" + estado + "]";
-    }
-
-    // Enum para el estado del carrito
     public enum EstadoCarrito {
         pendiente,
         finalizado

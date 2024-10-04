@@ -3,28 +3,40 @@ package com.example.POS.Model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "productos")
+@Table(name="Productos")
 public class ProductosModel {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_producto;  // Campo clave primaria
+    private Long id_Producto;
 
-    @Column (unique = true)
-    private String codigo_producto;  // Código único del producto
+    @Column(name = "codigo_producto", unique = true, nullable = false)
+    private String codigo_producto;
 
-    private String nombre;  // Nombre del producto
-    private String descripcion;  // Descripción del producto
-    private double precio_unitario;  // Precio por unidad del producto
-    private int cantidad_disponible;  // Stock disponible
-    private String estado;  // Estado del producto (ej: Activo, Inactivo)
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
 
-    // Constructor vacío requerido por JPA
+    @Column(name = "descripcion")
+    private String descripcion;
+
+    @Column(name = "precio_unitario", nullable = false)
+    private double precio_unitario;
+
+    @Column(name = "cantidad_disponible", nullable = false)
+    private Integer cantidad_disponible;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", nullable = false)
+    private EstadoProducto estado;
+
+    public enum EstadoProducto {
+        activo, agotado
+    }
+
     public ProductosModel() {
     }
 
-    // Constructor con parámetros
-    public ProductosModel(String codigo_producto, String nombre, String descripcion, double precio_unitario, int cantidad_disponible, String estado) {
+    public ProductosModel(Long id_Producto, String codigo_producto, String nombre, String descripcion, double precio_unitario, Integer cantidad_disponible, EstadoProducto estado) {
+        this.id_Producto = id_Producto;
         this.codigo_producto = codigo_producto;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -33,13 +45,12 @@ public class ProductosModel {
         this.estado = estado;
     }
 
-    // Getters y Setters
-    public Long getId_producto() {
-        return id_producto;
+    public Long getId_Producto() {
+        return id_Producto;
     }
 
-    public void setId_producto(Long id_producto) {
-        this.id_producto = id_producto;
+    public void setId_Producto(Long id_Producto) {
+        this.id_Producto = id_Producto;
     }
 
     public String getCodigo_producto() {
@@ -74,28 +85,19 @@ public class ProductosModel {
         this.precio_unitario = precio_unitario;
     }
 
-    public int getCantidad_disponible() {
+    public Integer getCantidad_disponible() {
         return cantidad_disponible;
     }
 
-    public void setCantidad_disponible(int cantidad_disponible) {
+    public void setCantidad_disponible(Integer cantidad_disponible) {
         this.cantidad_disponible = cantidad_disponible;
     }
 
-    public String getEstado() {
+    public EstadoProducto getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoProducto estado) {
         this.estado = estado;
-    }
-
-    // Sobrescribimos el método toString
-    @Override
-    public String toString() {
-        return "Producto [id_producto=" + id_producto + ", codigo_producto=" + codigo_producto +
-                ", nombre=" + nombre + ", descripcion=" + descripcion +
-                ", precio_unitario=" + precio_unitario + ", cantidad_disponible=" + cantidad_disponible +
-                ", estado=" + estado + "]";
     }
 }

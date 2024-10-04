@@ -14,35 +14,34 @@ public class EmpleadoService {
     @Autowired
     private EmpleadoRepository empleadoRepository;
 
-    // Obtener todos los empleados
+    // Obtener todos
     public List<EmpleadoModel> getAllEmpleados() {
         return empleadoRepository.findAll();
     }
 
-    // Obtener un empleado por ID
+    // Obtener por ID
     public Optional<EmpleadoModel> getEmpleadoById(Long id) {
         return empleadoRepository.findById(id);
     }
 
-    // Guardar un nuevo empleado
+    // Guardar
     public EmpleadoModel saveEmpleado(EmpleadoModel empleado) {
         return empleadoRepository.save(empleado);
     }
 
-    // Actualizar un empleado existente
+    // Actualizar
     public EmpleadoModel actualizarEmpleado(Long id, EmpleadoModel detallesEmpleado) {
-        EmpleadoModel empleado = empleadoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
+        EmpleadoModel empleado = empleadoRepository.findById(id).orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
 
-        empleado.setNumero_identificacion(detallesEmpleado.getNumero_identificacion()); // Actualizar número de identificación
-        empleado.setNombres(detallesEmpleado.getNombres()); // Actualizar nombres
-        empleado.setApellidos(detallesEmpleado.getApellidos()); // Actualizar apellidos
-        empleado.setDireccion(detallesEmpleado.getDireccion()); // Actualizar dirección
-        empleado.setTelefono(detallesEmpleado.getTelefono()); // Actualizar teléfono
-        empleado.setRol(detallesEmpleado.getRol()); // Actualizar rol
-        empleado.setEstado(detallesEmpleado.getEstado()); // Actualizar estado
+        empleado.setNumero_identificacion(detallesEmpleado.getNumero_identificacion());
+        empleado.setNombres(detallesEmpleado.getNombres());
+        empleado.setApellidos(detallesEmpleado.getApellidos());
+        empleado.setDireccion(detallesEmpleado.getDireccion());
+        empleado.setTelefono(detallesEmpleado.getTelefono());
+        empleado.setRol(detallesEmpleado.getRol());
+        empleado.setEstado(detallesEmpleado.getEstado());
 
-        return empleadoRepository.save(empleado); // Guardar los cambios
+        return empleadoRepository.save(empleado);
     }
 
     // Eliminar un empleado

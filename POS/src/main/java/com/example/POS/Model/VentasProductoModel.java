@@ -1,21 +1,13 @@
-
 package com.example.POS.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
+import jakarta.persistence.*;
 @Entity
 @Table(name = "Ventas_Producto")
 public class VentasProductoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_venta_producto;  // Campo clave primaria
+    private Long id_venta_producto;
 
     @ManyToOne
     @JoinColumn(name = "id_venta", nullable = false)
@@ -25,22 +17,23 @@ public class VentasProductoModel {
     @JoinColumn(name = "id_producto", nullable = false)
     private ProductosModel producto;  // Relación con ProductosModel
 
-    private int cantidad;  // Cantidad del producto vendido
-    private double precio_unidad;  // Precio por unidad del producto vendido
+    @Column(name = "cantidad", nullable = false)
+    private int cantidad;
 
-    // Constructor vacío requerido por JPA
+    @Column(name = "precio_unidad", nullable = false)
+    private double precio_unidad;
+
     public VentasProductoModel() {
     }
 
-    // Constructor con parámetros
-    public VentasProductoModel(VentasModel venta, ProductosModel producto, int cantidad, double precio_unidad) {
+    public VentasProductoModel(Long id_venta_producto, VentasModel venta, ProductosModel producto, int cantidad, double precio_unidad) {
+        this.id_venta_producto = id_venta_producto;
         this.venta = venta;
         this.producto = producto;
         this.cantidad = cantidad;
         this.precio_unidad = precio_unidad;
     }
 
-    // Getters y Setters
     public Long getId_venta_producto() {
         return id_venta_producto;
     }
@@ -79,15 +72,5 @@ public class VentasProductoModel {
 
     public void setPrecio_unidad(double precio_unidad) {
         this.precio_unidad = precio_unidad;
-    }
-
-    // Sobrescribimos el método toString
-    @Override
-    public String toString() {
-        return "VentasProducto [id_venta_producto=" + id_venta_producto +
-                ", venta=" + venta +
-                ", producto=" + producto +
-                ", cantidad=" + cantidad +
-                ", precio_unidad=" + precio_unidad + "]";
     }
 }

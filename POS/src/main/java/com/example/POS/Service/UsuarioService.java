@@ -14,36 +14,35 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // Obtener todos los usuarios
+    // Obtener todos
     public List<UsuarioModel> getAllUsuarios() {
         return usuarioRepository.findAll();
     }
 
-    // Obtener un usuario por ID
+    // Obtener  por ID
     public Optional<UsuarioModel> getUsuarioById(Long id) {
         return usuarioRepository.findById(id);
     }
 
-    // Guardar un nuevo usuario
+    // Guardar
     public UsuarioModel saveUsuario(UsuarioModel usuario) {
         return usuarioRepository.save(usuario);
     }
 
-    // Actualizar un usuario existente
+    // Actualizar
     public UsuarioModel actualizarUsuario(Long id, UsuarioModel detallesUsuario) {
         UsuarioModel usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        usuario.setNombre_usuario(detallesUsuario.getNombre_usuario()); // Actualizar nombre de usuario
-        usuario.setPassword(detallesUsuario.getPassword()); // Actualizar contraseña
-        usuario.setToken_jwt(detallesUsuario.getToken_jwt()); // Actualizar token JWT
-        usuario.setEmpleado(detallesUsuario.getEmpleado()); // Actualizar empleado asociado
-        usuario.setEstado(detallesUsuario.getEstado()); // Actualizar estado
-
+        usuario.setNombre_usuario(detallesUsuario.getNombre_usuario());
+        usuario.setPassword(detallesUsuario.getPassword());
+        usuario.setToken_jwt(detallesUsuario.getToken_jwt());
+        usuario.setEmpleado(detallesUsuario.getEmpleado());
+        usuario.setEstado(detallesUsuario.getEstado());
         return usuarioRepository.save(usuario);
     }
 
-    // Eliminar un usuario
+    // Eliminar
     public void eliminarUsuario(Long id) {
         usuarioRepository.deleteById(id);
     }

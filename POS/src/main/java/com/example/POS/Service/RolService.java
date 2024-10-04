@@ -9,44 +9,35 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RolServicie {
+public class RolService {
 
     @Autowired
 
     private RolRepository rolRepository;
 
-    // obtener todos los roles
-
+    // Obtener todos
     public List<RolModel> getAllRol(){
         return rolRepository.findAll();
     }
 
-
-    // obtener por id
+    // Obtener por id
     public Optional<RolModel> getRolById(long id){
         return rolRepository.findById(id);
     }
 
-    // guardar rol
-
+    // Guardar
     public RolModel saveRol (RolModel rol){
         return rolRepository.save(rol);
     }
 
-    //actualizar rol
-
+    //Actualizar
     public RolModel actualizarRol(Long id, RolModel rolDetalles) {
-        // Buscar el rol por ID o lanzar una excepción si no existe
         RolModel rol = rolRepository.findById(id).orElseThrow(() -> new RuntimeException("Rol no encontrado"));
-
-        // Actualizar los detalles del rol con la información proporcionada
         rol.setNombre_rol(rolDetalles.getNombre_rol());
-
-        // Guardar los cambios en el repositorio
         return rolRepository.save(rol);
     }
 
-    // Eliminar Rol
+    // Eliminar
     public void eliminarRol (Long id){
         rolRepository.deleteById(id);
     }
