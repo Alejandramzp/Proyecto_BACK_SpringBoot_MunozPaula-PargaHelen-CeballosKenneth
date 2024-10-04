@@ -1,8 +1,7 @@
 package com.example.POS.Controller;
 
-import com.example.POS.Model.ProductosModel;
+
 import com.example.POS.Model.RolModel;
-import com.example.POS.Service.ProductoService;
 import com.example.POS.Service.RolServicie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,8 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-RestController
+@RestController
 @RequestMapping("/admin")
+
 
 public class RolController {
 
@@ -32,19 +32,19 @@ public class RolController {
         }
 
         @GetMapping ("/rol/{id}")
-        public Optional<ProductosModel> getRolById(@PathVariable Long id){
+        public Optional<RolModel> getRolById(@PathVariable Long id){
             return rolService.getRolById(id);
         }
 
-        @PutMapping("/producto/{id}")
-        public ProductosModel actualizarProducto (@PathVariable long id, @RequestBody ProductosModel producto) {
+        @PutMapping("/rol/{id}")
+        public RolModel actualizarRol (@PathVariable long id, @RequestBody RolModel rol) {
             return rolService.actualizarRol(id, rol);
         }
 
-        @DeleteMapping("/producto/{id}")
-        public void eliminarProducto(@PathVariable long id){
+        @DeleteMapping("/rol/{id}")
+        public void eliminarRolo(@PathVariable long id){
             rolService.eliminarRol(id);
         }
     }
 
-}
+

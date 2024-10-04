@@ -1,8 +1,7 @@
 package com.example.POS.Controller;
 
-import com.example.POS.Model.EmpleadoModel;
+
 import com.example.POS.Model.VentasProductoModel;
-import com.example.POS.Service.EmpleadoService;
 import com.example.POS.Service.VentasProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
