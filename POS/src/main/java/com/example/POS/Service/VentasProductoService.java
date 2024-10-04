@@ -16,9 +16,9 @@ public class VentasProductoService {
 
     // Obtener todos los productos de ventas
     public List<VentasProductoModel> getAllVentasProducto() {
+        // No es necesario mapear manualmente si ya estás usando VentasProductoModel
         return ventasProductoRepository.findAll();
     }
-
 
     // Obtener un producto de venta por ID
     public Optional<VentasProductoModel> getVentasProductoById(Long id) {
@@ -26,8 +26,9 @@ public class VentasProductoService {
     }
 
     // Guardar un nuevo producto de venta
-    public VentasProductoModel saveVentasProducto(VentasProductoModel ventasProducto) {
-        return ventasProductoRepository.save(ventasProducto);
+    public VentasProductoModel saveVentasProducto(VentasProductoModel ventasProductoModel) {
+        // Guardar la entidad y devolver el modelo guardado
+        return ventasProductoRepository.save(ventasProductoModel);
     }
 
     // Actualizar un producto de venta existente
@@ -35,11 +36,13 @@ public class VentasProductoService {
         VentasProductoModel ventasProducto = ventasProductoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto de venta no encontrado"));
 
-        ventasProducto.setCantidad(detallesVentasProducto.getCantidad()); // Actualizar cantidad
-        ventasProducto.setPrecio_unidad(detallesVentasProducto.getPrecio_unidad()); // Actualizar precio por unidad
-        ventasProducto.setProducto(detallesVentasProducto.getProducto()); // Actualizar ID del producto
-        ventasProducto.setVenta(detallesVentasProducto.getVenta()); // Actualizar ID de la venta
+        // Actualizar los valores de la entidad
+        ventasProducto.setCantidad(detallesVentasProducto.getCantidad());
+        ventasProducto.setPrecio_unidad(detallesVentasProducto.getPrecio_unidad());
+        ventasProducto.setProducto(detallesVentasProducto.getProducto());
+        ventasProducto.setVenta(detallesVentasProducto.getVenta());
 
+        // Guardar la entidad actualizada
         return ventasProductoRepository.save(ventasProducto);
     }
 
@@ -48,4 +51,3 @@ public class VentasProductoService {
         ventasProductoRepository.deleteById(id);
     }
 }
-

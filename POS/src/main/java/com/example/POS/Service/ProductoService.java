@@ -16,7 +16,7 @@ public class ProductoService {
 
     // obtener todos los productos
 
-    public List<ProductosModel> getProducto(){
+    public List<ProductosModel> getAllProducto(){
         return productoRepository.findAll();
     }
 
