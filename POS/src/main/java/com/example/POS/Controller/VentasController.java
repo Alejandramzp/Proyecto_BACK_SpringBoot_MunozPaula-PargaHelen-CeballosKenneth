@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/admin")
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@RequestMapping("/api")
 public class VentasController {
 
     @Autowired
