@@ -1,7 +1,6 @@
 create database pos;
 use pos; 
 
-
 CREATE TABLE Productos (
     id_producto INT PRIMARY KEY AUTO_INCREMENT,
     codigo_producto VARCHAR(50) UNIQUE NOT NULL,
@@ -76,4 +75,5 @@ CREATE TABLE Usuario (
     FOREIGN KEY (id_empleado) REFERENCES Empleado(id_empleado)
 );
 
+show tables;
 

@@ -1,4 +1,4 @@
-
+use pos;
 
 -- --------PRODUCTO--------------
 INSERT INTO Productos (codigo_producto, nombre, descripcion, precio_unitario, cantidad_disponible, estado) 
