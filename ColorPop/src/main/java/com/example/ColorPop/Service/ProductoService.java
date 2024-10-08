@@ -3,7 +3,9 @@ package com.example.ColorPop.Service;
 import com.example.ColorPop.Model.Producto;
 import com.example.ColorPop.Repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +40,12 @@ public class ProductoService {
         producto.setPrecio(productoDetails.getPrecio());
         producto.setCantidad_disponible(productoDetails.getCantidad_disponible());
 
+        return productoRepository.save(producto);
+    }
+    public Producto updateCantidadDisponible(Long id, int nuevaCantidad) {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado"));
+        producto.setCantidad_disponible(nuevaCantidad);
         return productoRepository.save(producto);
     }
 }

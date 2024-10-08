@@ -1,6 +1,7 @@
 package com.example.ColorPop.Controller;
 
 import com.example.ColorPop.Model.Producto;
+import com.example.ColorPop.Model.CantidadDTO;
 import com.example.ColorPop.Service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -73,5 +74,18 @@ public class ProductoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @PutMapping("/{id}/cantidad")
+    public ResponseEntity<Producto> updateCantidadProducto(@PathVariable Long id, @RequestBody CantidadDTO cantidadDTO) {
+        try {
+            Producto productoActualizado = productoService.updateCantidadDisponible(id, cantidadDTO.getCantidad_disponible());
+            return ResponseEntity.ok(productoActualizado);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 }
 
