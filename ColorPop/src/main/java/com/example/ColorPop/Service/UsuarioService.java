@@ -31,11 +31,15 @@ public class UsuarioService {
 
     public Usuario updateUsuario(Long id, Usuario usuarioDetails){
         Usuario usuario = usuarioRepository.findById(id).orElseThrow();
-
-        usuario.setId_empleado(usuarioDetails.getId_empleado());
+        usuario.setIdEmpleado(usuarioDetails.getIdEmpleado());
         usuario.setUsername(usuarioDetails.getUsername());
         usuario.setPassword(usuarioDetails.getPassword());
 
         return usuarioRepository.save(usuario);
+    }
+
+    // Buscar usuario por su nombre de usuario
+    public Optional<Usuario> findByUsername(String username) {
+        return usuarioRepository.findByUsername(username);
     }
 }

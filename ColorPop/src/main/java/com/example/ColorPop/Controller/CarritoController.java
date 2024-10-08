@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/carritos")
+@RequestMapping("/api/carritos")
 public class CarritoController {
 
     @Autowired

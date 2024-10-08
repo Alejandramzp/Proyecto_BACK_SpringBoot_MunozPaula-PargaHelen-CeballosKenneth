@@ -1,4 +1,4 @@
-package com.example.ColorPop;
+package com.example.ColorPop.Security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
