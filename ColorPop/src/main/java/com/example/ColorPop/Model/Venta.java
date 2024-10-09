@@ -16,10 +16,6 @@ public class Venta {
     @Column(nullable = false, unique = true, length = 50)
     private String numero_venta;
 
-    @ManyToOne
-    @JoinColumn(name = "id_empleado", nullable = false)
-    private Empleado id_empleado;
-
     @Column(name = "fecha", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp fecha;
 
@@ -40,14 +36,6 @@ public class Venta {
 
     public void setNumero_venta(String numero_venta) {
         this.numero_venta = numero_venta;
-    }
-
-    public Empleado getId_empleado() {
-        return id_empleado;
-    }
-
-    public void setId_empleado(Empleado id_empleado) {
-        this.id_empleado = id_empleado;
     }
 
     public Timestamp getFecha() {

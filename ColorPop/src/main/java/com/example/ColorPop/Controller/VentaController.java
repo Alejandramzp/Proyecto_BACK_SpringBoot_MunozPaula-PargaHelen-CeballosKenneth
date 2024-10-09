@@ -74,4 +74,18 @@ public class VentaController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    // Endpoint para agregar productos a una venta y actualizar el total
+    @PostMapping("/{ventaId}/agregarProducto/{productoId}")
+    public ResponseEntity<Venta> agregarProductoADetalleVenta(
+            @PathVariable Long ventaId,
+            @PathVariable Long productoId,
+            @RequestParam int cantidad) {
+        try {
+            Venta ventaActualizada = ventaService.agregarProductoADetalleVenta(ventaId, productoId, cantidad);
+            return ResponseEntity.ok(ventaActualizada);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
 }

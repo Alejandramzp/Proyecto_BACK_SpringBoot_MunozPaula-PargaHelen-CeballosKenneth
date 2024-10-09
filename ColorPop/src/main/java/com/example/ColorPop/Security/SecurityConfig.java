@@ -24,6 +24,10 @@ public class SecurityConfig {
     @Autowired
     private UsuarioService usuarioService;
 
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -31,42 +35,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // === Acceso público ===
                         .requestMatchers("/api/login").permitAll()  // Cualquier usuario puede acceder al login
-
-                        // === Permisos para /api/ventas ===
-                        .requestMatchers("GET", "/api/ventas").hasAnyRole("CAJERO", "GERENTE", "ADMIN")
-                        .requestMatchers("POST", "/api/ventas").hasAnyRole("CAJERO", "GERENTE", "ADMIN")  // Crear ventas
-                        .requestMatchers("PUT", "/api/ventas").hasAnyRole("GERENTE", "ADMIN")   // Actualizar ventas
-                        .requestMatchers("DELETE", "/api/ventas").hasRole("ADMIN")  // Solo Gerente puede eliminar
-
-                        // === Permisos para /api/detalles_ventas ===
-                        .requestMatchers("GET", "/api/detalles_ventas").hasAnyRole("CAJERO", "GERENTE", "ADMIN")
-                        .requestMatchers("POST", "/api/detalles_ventas").hasAnyRole("CAJERO","GERENTE", "ADMIN")  // Crear detalles
-                        .requestMatchers("PUT", "/api/detalles_ventas").hasAnyRole("GERENTE", "ADMIN")   // Actualizar detalles
-                        .requestMatchers("DELETE", "/api/detalles_ventas").hasRole("ADMIN")  // Eliminar detalles
-
-                        // === Permisos para /api/productos ===
-                        .requestMatchers("GET", "/api/productos").hasAnyRole("Cajero", "GERENTE", "ADMIN")
-                        .requestMatchers("POST", "/api/productos").hasAnyRole("GERENTE", "ADMIN")  // Crear productos
-                        .requestMatchers("PUT", "/api/productos").hasAnyRole("GERENTE", "ADMIN")   // Actualizar productos
-                        .requestMatchers("DELETE", "/api/productos").hasRole("ADMIN")  // Solo Admin puede eliminar
-
-                        // === Permisos para /api/empleados ===
-                        .requestMatchers("GET", "/api/empleados").hasAnyRole("ADMIN")
-                        .requestMatchers("POST", "/api/empleados").hasRole("ADMIN")  // Solo Admin puede crear empleados
-                        .requestMatchers("PUT", "/api/empleados").hasRole("ADMIN")   // Solo Admin puede actualizar empleados
-                        .requestMatchers("DELETE", "/api/empleados").hasRole("ADMIN")  // Solo Admin puede eliminar empleados
-
-                        // === Permisos para /api/usuarios ===
-                        .requestMatchers("GET", "/api/usuarios").hasAnyRole("ADMIN")
-                        .requestMatchers("POST", "/api/usuarios").hasRole("ADMIN")  // Solo Admin puede crear empleados
-                        .requestMatchers("PUT", "/api/usuarios").hasRole("ADMIN")   // Solo Admin puede actualizar empleados
-                        .requestMatchers("DELETE", "/api/usuarios").hasRole("ADMIN")  // Solo Admin puede eliminar empleados
-
-                        // === Permisos para /api/carritos ===
-                        .requestMatchers("GET", "/api/carritos").hasAnyRole("CAJERO", "GERENTE", "ADMIN")
-                        .requestMatchers("POST", "/api/carritos").hasAnyRole("CAJERO", "GERENTE", "ADMIN")  // Crear carritos
-                        .requestMatchers("PUT", "/api/carritos").hasAnyRole("CAJERO", "GERENTE", "ADMIN")
-                        .requestMatchers("DELETE", "/api/carritos").hasAnyRole("CAJERO", "GERENTE", "ADMIN")  // Eliminar carritos
+                        .requestMatchers("/api/ventas/").hasAuthority("Cajero") // Cajero solo puede registrar ventas
+                        .requestMatchers("/api/inventarios/").hasAuthority("Gerente") // Gerente gestiona inventarios y reportes
+                        .requestMatchers("/api/empleados/").hasAuthority("Administrador") // Admin gestiona empleados
 
                         .anyRequest().authenticated() // Otras rutas requieren autenticación
                 )
