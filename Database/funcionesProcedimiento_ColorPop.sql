@@ -1,5 +1,4 @@
-
-
+USE ColorPop;
 
 -- funcion que permite calcular el 19% 
 DELIMITER //
@@ -15,16 +14,9 @@ END //
 
 DELIMITER ;
 
--- uso de la funcion 
+SELECT * FROM ventas;
 
--- Ejemplo para insertar una nueva venta
-INSERT INTO ventas (numero_venta, total)
-VALUES ('V008', calcular_total_con_impuesto(50000.00)); 
--- Aquí '100.00' sería el subtotal de la compra sin impuestos
-
-select * from ventas;
 -- Evento para generar un descuento el dia de la mujer
-
 CREATE EVENT aplicar_descuento_dia_mujer
 ON SCHEDULE EVERY 1 YEAR
 STARTS '2024-12-15 00:00:00'
@@ -38,7 +30,6 @@ DO
   SET GLOBAL event_scheduler = ON;
  
  -- Evento para generar descuetos en el niversario de la tienda
- 
   CREATE EVENT aplicar_descuento_aniversario
 ON SCHEDULE EVERY 1 YEAR
 STARTS '2024-03-08 00:00:00'
@@ -53,13 +44,12 @@ DO
               END
   WHERE DATE(fecha) = '2024-03-08';
   
--- procedimiento que muestre tipo facturas con tabla ventas y detalle venta  que muestre el total sin iva y total con iva
--- 
+-- procedimiento que muestre facturas con total sin iva y total con iva
 DELIMITER $$
 
 CREATE PROCEDURE mostrar_facturas()
 BEGIN
-  -- Seleccionamos las ventas con su total sin IVA y con IVA
+  -- Ventas con su total sin IVA y con IVA
   SELECT 
     v.id AS id_venta,
     v.numero_venta,
@@ -68,7 +58,7 @@ BEGIN
     ROUND(v.total * 1.19, 2) AS total_con_iva
   FROM ventas v;
 
-  -- Seleccionamos el detalle de las ventas
+  -- Detalle de las ventas
   SELECT 
     dv.id_venta,
     p.nombre AS producto,
@@ -83,6 +73,3 @@ END$$
 DELIMITER ;
 
 CALL mostrar_facturas();
-
-select * from ventas;
-
