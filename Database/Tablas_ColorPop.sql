@@ -42,10 +42,9 @@ CREATE TABLE carrito(
 CREATE TABLE ventas(
 	id BIGINT PRIMARY KEY AUTO_INCREMENT,
     numero_venta VARCHAR(50) UNIQUE NOT NULL,
-    id_empleado BIGINT NOT NULL,
     fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    total DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (id_empleado) REFERENCES empleados(id)
+    total DECIMAL(10, 2) NOT NULL
+   
 );
 
 CREATE TABLE detalles_venta(
@@ -59,3 +58,6 @@ CREATE TABLE detalles_venta(
 );
 
 SHOW TABLES;
+
+select * from ventas ;
+

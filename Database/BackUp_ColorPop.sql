@@ -49,12 +49,11 @@ CREATE TABLE carrito_resguardo (
 CREATE TABLE ventas_resguardo (
     id BIGINT,
     numero_venta VARCHAR(50),
-    id_empleado BIGINT,
     fecha TIMESTAMP,
     total DECIMAL(10, 2),
     fecha_resguardo TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id, fecha_resguardo),
-    FOREIGN KEY (id_empleado) REFERENCES empleados_resguardo(id)
+    PRIMARY KEY (id, fecha_resguardo)
+   
 );
 
 CREATE TABLE detalles_venta_resguardo (

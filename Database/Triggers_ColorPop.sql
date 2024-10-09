@@ -38,8 +38,8 @@ CREATE TRIGGER after_venta_delete
 AFTER DELETE ON ventas
 FOR EACH ROW
 BEGIN
-    INSERT INTO ventas_resguardo (id, numero_venta, id_empleado, fecha, total)
-    VALUES (OLD.id, OLD.numero_venta, OLD.id_empleado, OLD.fecha, OLD.total);
+    INSERT INTO ventas_resguardo (id, numero_venta, fecha, total)
+    VALUES (OLD.id, OLD.numero_venta, OLD.fecha, OLD.total);
 END$$
 
 CREATE TRIGGER after_detalle_venta_delete
